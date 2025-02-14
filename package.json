@@ -10,6 +10,8 @@
   "author": "Dhananji Madhushika",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.5",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
@@ -18,8 +20,11 @@
   "dependencies": {
     "@prisma/client": "^6.1.0",
     "@types/express": "^5.0.0",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "prisma": "^6.1.0"
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.1.0",
+    "zod": "^3.24.1"
   }
 }
