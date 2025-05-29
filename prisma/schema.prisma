@@ -13,13 +13,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+enum Role {
+  ADMIN
+  BRANCH_ADMIN
+  CASHIER
+  USER
+}
+
+
+
 model User {
   id Int @id @default(autoincrement())
   name String
   email String @unique
   password String
+  phoneNumber String
+  userImage String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role Role @default(USER)
+
+  @@map("user")
+}
+
+model Address{
+  id Int @id @default(autoincrement())
+  lineOne String
+  lineTwo String?
+  city String
+  country String
+  pinCode String
+  userId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("user")
+  @@map("addresses")
+}
+
+model Branch {
+  id Int @id @default(autoincrement())
+  name String
+  phoneNumber String
+  address String?
 }
