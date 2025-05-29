@@ -1,23 +1,31 @@
-import { Request, Response, NextFunction } from "express";
-import { ErrorCode, HttpException } from "./exceptions/root";
-import { InternalException } from "./exceptions/internal-exception";
+import {Request, Response, NextFunction } from "express"
+import { ErrorCode, HttpException } from "./exceptions/root"
+import { InternalException } from "./exceptions/internal-exception"
+import { ZodError } from "zod"
+import { BadRequestsException } from "./exceptions/bad-request"
+
 
 export const errorHandler = (method: Function) => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        try {
-            method(req, res, next);
-        } catch (error: any) {
+    return async (req:Request, res:Response, next:NextFunction) => {
+        try{
+           await method(req, res, next)
+
+        }catch(error:any){
             let exception: HttpException;
-            if (error instanceof HttpException) {
+            if(error instanceof HttpException){
                 exception = error;
-            } else {
-                exception = new InternalException(
-                    "Something went wrong!", 
-                    error, 
-                    ErrorCode.INTERNAL_EXCEPTION
-                );
+
+            } else{
+                if(error instanceof ZodError){
+                    exception = new BadRequestsException('Unprocessable entity', ErrorCode.UNPROCESSABLE_ENTITY)
+                }else{
+                    exception = new InternalException('Something went wrong', error, ErrorCode.INTERNAL_EXCEPTION)
+                }
+                
             }
-            next(exception);
+            next(exception)
+
         }
-    };
-};
+    }
+
+}
