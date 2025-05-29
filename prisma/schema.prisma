@@ -57,3 +57,34 @@ model Branch {
   phoneNumber String
   address String?
 }
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  productImage String
+  price Decimal
+  salesStock Int
+  usageStock Int
+  exDate DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductCategory{
+  id Int @id @default(autoincrement())
+  name String
+}
+
+model Services{
+  id Int @id @default(autoincrement())
+  name String
+  serviceImage String
+  duration String
+  price Decimal
+}
+
+model ServicesCategory{
+  id Int @id @default(autoincrement())
+  name String
+}
